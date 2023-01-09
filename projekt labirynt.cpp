@@ -5,6 +5,7 @@ using namespace std;
 
 char gracz = '8';
 char klawisz;
+int l = 5;
 
 const int k = 10;
 const int j = 20;
@@ -191,9 +192,8 @@ void wygrana()
 
 void sciana()
 {
-    int l = 5;
 
-   // temp == labirynt[gracz_y][gracz_x];
+   temp == labirynt[gracz_y][gracz_x];
     if (temp == '#')
     {
         l -=1;
