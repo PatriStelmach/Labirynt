@@ -1,31 +1,184 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33205.214
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "projekt labirynt", "projekt labirynt\projekt labirynt.vcxproj", "{D5AA26FC-941D-4754-8564-5BC113508079}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Debug|x64.ActiveCfg = Debug|x64
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Debug|x64.Build.0 = Debug|x64
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Debug|x86.ActiveCfg = Debug|Win32
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Debug|x86.Build.0 = Debug|Win32
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Release|x64.ActiveCfg = Release|x64
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Release|x64.Build.0 = Release|x64
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Release|x86.ActiveCfg = Release|Win32
-		{D5AA26FC-941D-4754-8564-5BC113508079}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6100930D-F92E-469C-A6E1-A5B1279DA7A8}
-	EndGlobalSection
-EndGlobal
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+char gracz = '8';
+char klawisz;
+
+const int k = 10;
+const int j = 20;
+char labirynt[k][j] =
+
+{
+    {'#','$','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+    {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+    {'#',' ','#','#',' ','#','#','#','#','#','#',' ','#','#',' ','#','#','#',' ','#'},
+    {'#',' ','#','#',' ','#',' ','#',' ','#','#',' ','#','#',' ','#',' ',' ',' ','#'},
+    {'#',' ',' ',' ',' ',' ',' ','#',' ','#','#',' ','#','#',' ','#','#','#',' ','#'},
+    {'#',' ','#','#','#','#',' ','#',' ','#',' ',' ','#',' ',' ',' ',' ','#',' ','#'},
+    {'#',' ','#',' ',' ',' ',' ',' ',' ','#','#','#','#',' ','#','#',' ','#',' ','#'},
+    {'#',' ','#','#','#','#','#','#','#','#','#','#','#',' ','#','#',' ','#',' ','#'},
+    {'#',' ','#',' ',' ',' ',' ',' ',' ','@',' ',' ',' ',' ',' ',' ',' ','#',' ','#'},
+    {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+};
+
+char temp = '$';
+int gracz_x(0);
+int gracz_y(0);
+
+void sciana();
+void pozycja();
+void ruchy();
+void wypisanie();
+void wygrana();
+
+
+
+
+int main()
+{
+    cout << "Witam w grze 'LABIRYNT' " << endl;
+    cout << "---------------------\n\n" << endl;
+
+    pozycja();
+
+    do
+    {
+
+        wypisanie();
+
+        cin >> klawisz;
+        ruchy();
+            
+        sciana();
+
+    } while (labirynt[gracz_y][gracz_x] != '@');
+    
+    
+
+    return 0;
+}
+
+
+
+
+
+void ruchy()
+{
+
+    switch (klawisz)
+    {
+    case 'g':
+
+        labirynt[gracz_y][gracz_x] = temp;
+        gracz_y--;
+        temp = labirynt[gracz_y][gracz_x];
+        
+        wygrana();
+
+        labirynt[gracz_y][gracz_x] = gracz;      
+        break;
+    case 'd':
+
+        labirynt[gracz_y][gracz_x] = temp;
+        gracz_y++;
+        temp = labirynt[gracz_y][gracz_x];
+        
+        wygrana();
+
+        labirynt[gracz_y][gracz_x] = gracz;       
+        break;
+    case 'l':
+
+        labirynt[gracz_y][gracz_x] = temp;
+        gracz_x--;
+        temp = labirynt[gracz_y][gracz_x];
+
+        wygrana();
+
+        labirynt[gracz_y][gracz_x] = gracz;      
+        break;
+    case 'p':
+
+        labirynt[gracz_y][gracz_x] = temp;
+        gracz_x++;
+        temp = labirynt[gracz_y][gracz_x];
+
+        wygrana();
+
+        labirynt[gracz_y][gracz_x] = gracz;
+        break;
+    default:
+        break;
+    }
+
+}
+
+void wypisanie()
+{
+    for (int y = 0; y <= k-1; y++)
+    {
+        for (int x = 0; x <= j-1; x++)
+        {
+            cout << labirynt[y][x];
+        }
+        cout << endl;
+    }
+}
+
+void pozycja()
+{
+    for (int y = 0; y <= k-1; y++)
+    {
+        for (int x = 0; x <= j-1; x++)
+        {
+            if (labirynt[y][x] == '$')
+            {
+
+                labirynt[y][x] = gracz;
+                gracz_x = x;
+                gracz_y = y;
+                break;
+            }
+        }
+    }
+}
+
+void wygrana()
+{
+    if (labirynt[gracz_y][gracz_x] == '@')
+    {
+        cout << "WYGRALES!\n\n" << endl;
+        exit(0);
+        
+    }
+
+}
+
+
+void sciana()
+{
+    int l = 3;
+    
+
+    if (labirynt[gracz_y][gracz_x] == '#', l - 1)
+    {
+        
+        cout << "Zostalo ci " << l << "Hp\n" << endl;
+        if (l < 1)
+        {
+            cout << "Zostalo ci 0 HP, koniec gry\n " << endl;
+            exit(0);
+        }
+       
+    }
+}
+
+
+
+
+
+
+
+
